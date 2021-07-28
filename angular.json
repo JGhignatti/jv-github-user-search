@@ -5,7 +5,7 @@
       "projectType": "application",
       "root": "apps/client",
       "sourceRoot": "apps/client/src",
-      "prefix": "jv-github-search",
+      "prefix": "jv",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
