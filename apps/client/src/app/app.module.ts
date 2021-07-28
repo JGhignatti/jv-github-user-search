@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { ListComponent } from './containers/list/list.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,11 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     RouterModule.forRoot([]),
   ],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ListComponent,
+    ListItemComponent,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
