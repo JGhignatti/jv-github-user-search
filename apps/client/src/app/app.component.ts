@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
+import { GithubSearchService } from './services/github-search.service';
+
 @UntilDestroy()
 @Component({
   selector: 'jv-root',
@@ -16,7 +18,8 @@ export class AppComponent implements OnInit {
   searchControl = new FormControl('');
 
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private githubSearchService: GithubSearchService) {
   }
 
   ngOnInit() {
