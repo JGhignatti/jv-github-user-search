@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { User } from '../../models/search-response.model';
 
 @Component({
   selector: 'jv-list-item',
@@ -6,4 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./list-item.component.scss'],
 })
 export class ListItemComponent {
+
+  @Input() user!: User;
 }

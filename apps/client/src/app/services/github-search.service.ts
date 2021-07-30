@@ -18,8 +18,14 @@ export class GithubSearchService {
   constructor(private http: HttpClient) {
   }
 
-  search(search: string): Observable<SearchResponse> {
-    const params = new HttpParams({ fromObject: { q: search } });
+  search(search: string, page: number): Observable<SearchResponse> {
+    const params = new HttpParams({
+      fromObject: {
+        q: search,
+        per_page: 20,
+        page,
+      },
+    });
 
     // return this.http.get<SearchResponseJson>(this.baseUrl, { headers: this.headers, params })
     //   .pipe(

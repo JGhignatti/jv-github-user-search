@@ -1,39 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { SearchStateService } from './services/search-state.service';
 
-import { GithubSearchService } from './services/github-search.service';
-
-@UntilDestroy()
 @Component({
   selector: 'jv-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  searchControl = new FormControl('');
+  searchControl = new FormControl('', Validators.required);
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private githubSearchService: GithubSearchService) {
+  constructor(private searchState: SearchStateService) {
   }
 
-  ngOnInit() {
-    this.searchControl.valueChanges
-      .pipe(
-        untilDestroyed(this),
-        debounceTime(800),
-        distinctUntilChanged(),
-      )
-      .subscribe(value => {
-        this.router.navigate([], {
-          relativeTo: this.activatedRoute,
-          queryParams: { s: value || null },
-        });
-      });
+  submit() {
+    this.searchState.search(this.searchControl.value);
   }
 }

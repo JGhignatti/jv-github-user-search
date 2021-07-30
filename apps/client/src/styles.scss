@@ -20,4 +20,16 @@
   h1 {
     @apply text-4xl font-black text-center;
   }
+
+  button, .button {
+    @apply px-3 py-2 flex items-center bg-indigo-500 rounded hover:bg-indigo-600;
+
+    &[disabled] {
+      @apply bg-gray-500 hover:bg-gray-500 cursor-not-allowed opacity-75;
+    }
+
+    > svg {
+      @apply ml-2;
+    }
+  }
 }
