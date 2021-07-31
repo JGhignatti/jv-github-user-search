@@ -57,7 +57,9 @@ export class SearchStateService {
   loadPage(page: number) {
     this._currentPage$.next(page);
 
-    this.getPage();
+    if (!this._pages$.value.has(page)) {
+      this.getPage();
+    }
   }
 
   retry() {
