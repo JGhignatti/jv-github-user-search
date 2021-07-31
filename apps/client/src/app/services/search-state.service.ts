@@ -51,6 +51,7 @@ export class SearchStateService {
   }
 
   search(value: string) {
+    this._pages$.next(new Map<number, User[]>());
     this._currentPage$.next(1);
     this._currentSearch$.next(value);
 
