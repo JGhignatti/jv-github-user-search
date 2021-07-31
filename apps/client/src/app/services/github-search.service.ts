@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 import { SearchResponse } from '../models/search-response.model';
 import { SearchResponseJson } from '../models/search-response.json';
@@ -185,6 +185,6 @@ export class GithubSearchService {
               "url": "https://github.com/Alwahsh"
           }
       ]
-    }`));
+    }`)).pipe(delay(4000));
   }
 }

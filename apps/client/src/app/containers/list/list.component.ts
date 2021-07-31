@@ -13,6 +13,7 @@ import { User } from '../../models/search-response.model';
 export class ListComponent implements OnInit {
 
   list$!: Observable<User[] | undefined>;
+  loading$!: Observable<boolean>;
   total$!: Observable<number>;
   currentPage$!: Observable<number>;
   currentSearch$!: Observable<string>;
@@ -22,6 +23,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.list$ = this.searchState.list$;
+    this.loading$ = this.searchState.loading$;
     this.total$ = this.searchState.total$;
     this.currentPage$ = this.searchState.currentPage$;
     this.currentSearch$ = this.searchState.currentSearch$;

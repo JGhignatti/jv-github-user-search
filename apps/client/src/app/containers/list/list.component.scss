@@ -2,7 +2,7 @@
   :host {
     @apply block pt-8 pb-4;
 
-    > div {
+    > #list-wrapper {
       @apply block w-full border border-gray-400 rounded;
     }
   }

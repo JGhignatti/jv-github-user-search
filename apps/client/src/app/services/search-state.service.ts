@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { User } from '../models/search-response.model';
 import { GithubSearchService } from './github-search.service';
@@ -12,6 +12,7 @@ import { GithubSearchService } from './github-search.service';
 export class SearchStateService {
 
   private _pages$ = new BehaviorSubject<Map<number, User[]>>(new Map<number, User[]>());
+  private _loading$ = new BehaviorSubject<boolean>(false);
   private _total$ = new BehaviorSubject<number>(0);
   private _currentPage$ = new BehaviorSubject<number>(1);
   private _currentSearch$ = new BehaviorSubject<string>('');
@@ -22,6 +23,10 @@ export class SearchStateService {
   get list$(): Observable<User[] | undefined> {
     return this._pages$.asObservable()
       .pipe(map(pages => pages.get(this._currentPage$.value)));
+  }
+
+  get loading$(): Observable<boolean> {
+    return this._loading$.asObservable();
   }
 
   get total$(): Observable<number> {
@@ -50,7 +55,9 @@ export class SearchStateService {
   }
 
   private getPage() {
+    this._loading$.next(true);
     this.githubSearchService.search(this._currentSearch$.value, this._currentPage$.value)
+      .pipe(finalize(() => this._loading$.next(false)))
       .subscribe(
         response => {
           const pages = this._pages$.value;
