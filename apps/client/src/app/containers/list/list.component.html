@@ -1,9 +1,20 @@
-<ng-container *ngIf="(loading$ | async) === false; else loader">
-  <div id="list-wrapper" *ngIf="currentSearch$ | async as search">
+<ng-container *ngIf="loading$ | async">
+  <jv-loader></jv-loader>
+</ng-container>
+
+<ng-container *ngIf="shouldShowError$ | async">
+  <div class="flex flex-col items-center">
+    <h3>There was an error.</h3>
+    <button class="mt-2" (click)="onRetry()">Try again</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="shouldShowList$ | async">
+  <div class="block w-full border border-gray-400 rounded">
     <h3 class="p-4 flex flex-wrap justify-between items-center bg-gray-600 rounded-t border-b border-gray-400">
-      <span class="mr-4">Showing results for: <strong>{{ search }}</strong></span>
-      <span>Page: <strong class="mr-4">
-        {{ currentPage$ | async }}</strong> Total items: <strong>{{ total$ | async }}</strong>
+      <span class="mr-4">Showing results for: <strong>{{ currentSearch$ | async }}</strong></span>
+      <span>
+        Page: <strong class="mr-4">{{ currentPage$ | async }}</strong> Total items: <strong>{{ total$ | async }}</strong>
       </span>
     </h3>
 
@@ -11,20 +22,3 @@
                   [user]="user"></jv-list-item>
   </div>
 </ng-container>
-
-<ng-template #loader>
-  <svg class="m-auto" xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-    <rect x="15" y="30" width="10" height="40" fill="#ffffff">
-      <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.6"></animate>
-    </rect>
-    <rect x="35" y="30" width="10" height="40" fill="#ffffff">
-      <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.4"></animate>
-    </rect>
-    <rect x="55" y="30" width="10" height="40" fill="#ffffff">
-      <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-0.2"></animate>
-    </rect>
-    <rect x="75" y="30" width="10" height="40" fill="#ffffff">
-      <animate attributeName="opacity" dur="1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1" values="1;0.2;1" begin="-1"></animate>
-    </rect>
-  </svg>
-</ng-template>

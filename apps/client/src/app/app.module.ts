@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ListComponent } from './containers/list/list.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ListItemComponent } from './components/list-item/list-item.component';
     AppComponent,
     ListComponent,
     ListItemComponent,
+    LoaderComponent,
   ],
   bootstrap: [AppComponent],
 })

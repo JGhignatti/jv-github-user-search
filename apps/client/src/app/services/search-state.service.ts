@@ -13,6 +13,8 @@ export class SearchStateService {
 
   private _pages$ = new BehaviorSubject<Map<number, User[]>>(new Map<number, User[]>());
   private _loading$ = new BehaviorSubject<boolean>(false);
+  private _error$ = new BehaviorSubject<boolean>(false);
+
   private _total$ = new BehaviorSubject<number>(0);
   private _currentPage$ = new BehaviorSubject<number>(1);
   private _currentSearch$ = new BehaviorSubject<string>('');
@@ -27,6 +29,10 @@ export class SearchStateService {
 
   get loading$(): Observable<boolean> {
     return this._loading$.asObservable();
+  }
+
+  get error$(): Observable<boolean> {
+    return this._error$.asObservable();
   }
 
   get total$(): Observable<number> {
@@ -54,8 +60,14 @@ export class SearchStateService {
     this.getPage();
   }
 
+  retry() {
+    this.getPage();
+  }
+
   private getPage() {
     this._loading$.next(true);
+    this._error$.next(false);
+
     this.githubSearchService.search(this._currentSearch$.value, this._currentPage$.value)
       .pipe(finalize(() => this._loading$.next(false)))
       .subscribe(
@@ -66,7 +78,7 @@ export class SearchStateService {
           this._pages$.next(pages);
           this._total$.next(response.total);
         },
-        error => {},
+        () => this._error$.next(true),
       );
   }
 }
