@@ -1,0 +1,7 @@
+<div *ngFor="let page of toDisplayPages; let first = first"
+     class="py-1 px-3"
+     [class.button]="page !== '...'"
+     [ngClass]="{ 'bg-indigo-400 hover:bg-indigo-400' : page === currentPage }"
+     (click)="selectPage(page)">
+  {{ page }}
+</div>

@@ -1,0 +1,5 @@
+@layer components {
+  :host {
+    @apply mt-3 flex justify-center items-center gap-1 flex-wrap;
+  }
+}

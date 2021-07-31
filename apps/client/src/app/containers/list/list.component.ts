@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { SearchStateService } from '../../services/search-state.service';
 import { User } from '../../models/search-response.model';
-import { map } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
   selector: 'jv-list',
   templateUrl: './list.component.html',
@@ -17,9 +19,10 @@ export class ListComponent implements OnInit {
   loading$!: Observable<boolean>;
   error$!: Observable<boolean>;
 
-  total$!: Observable<number>;
-  currentPage$!: Observable<number>;
   currentSearch$!: Observable<string>;
+
+  total!: number;
+  currentPage!: number;
 
   constructor(private searchState: SearchStateService) {
   }
@@ -29,9 +32,14 @@ export class ListComponent implements OnInit {
     this.loading$ = this.searchState.loading$;
     this.error$ = this.searchState.error$;
 
-    this.total$ = this.searchState.total$;
-    this.currentPage$ = this.searchState.currentPage$;
     this.currentSearch$ = this.searchState.currentSearch$;
+
+    this.searchState.total$
+      .pipe(untilDestroyed(this))
+      .subscribe(total => this.total = total);
+    this.searchState.currentPage$
+      .pipe(untilDestroyed(this))
+      .subscribe(page => this.currentPage = page);
   }
 
   get shouldShowError$(): Observable<boolean> {
@@ -50,5 +58,9 @@ export class ListComponent implements OnInit {
 
   onRetry() {
     this.searchState.retry();
+  }
+
+  onPageChanged(page: number) {
+    this.searchState.loadPage(page);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { User } from '../models/search-response.model';
@@ -23,8 +23,11 @@ export class SearchStateService {
   }
 
   get list$(): Observable<User[] | undefined> {
-    return this._pages$.asObservable()
-      .pipe(map(pages => pages.get(this._currentPage$.value)));
+    return combineLatest([
+      this._pages$.asObservable(),
+      this.currentPage$,
+    ])
+      .pipe(map(([pages, currentPage]) => pages.get(currentPage)));
   }
 
   get loading$(): Observable<boolean> {

@@ -14,11 +14,16 @@
     <h3 class="p-4 flex flex-wrap justify-between items-center bg-gray-600 rounded-t border-b border-gray-400">
       <span class="mr-4">Showing results for: <strong>{{ currentSearch$ | async }}</strong></span>
       <span>
-        Page: <strong class="mr-4">{{ currentPage$ | async }}</strong> Total items: <strong>{{ total$ | async }}</strong>
+        Page: <strong class="mr-4">{{ currentPage }}</strong> Total items: <strong>{{ total }}</strong>
       </span>
     </h3>
 
     <jv-list-item *ngFor="let user of (list$ | async)"
                   [user]="user"></jv-list-item>
+
   </div>
+
+  <jv-paginator [currentPage]="currentPage"
+                [total]="total"
+                (pageChanged)="onPageChanged($event)"></jv-paginator>
 </ng-container>

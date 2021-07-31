@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { User } from '../../models/search-response.model';
 
@@ -6,6 +6,7 @@ import { User } from '../../models/search-response.model';
   selector: 'jv-list-item',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListItemComponent {
 
