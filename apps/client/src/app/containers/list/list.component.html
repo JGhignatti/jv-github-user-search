@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-container *ngIf="shouldShowError$ | async">
-  <div class="flex flex-col items-center">
+  <div id="error-container" class="flex flex-col items-center">
     <h3>There was an error.</h3>
     <button class="mt-2" (click)="onRetry()">Try again</button>
   </div>

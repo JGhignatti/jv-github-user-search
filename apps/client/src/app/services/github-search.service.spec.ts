@@ -15,7 +15,7 @@ describe('GithubSearchService', () => {
       ],
     });
 
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(GithubSearchService);
   });
 
